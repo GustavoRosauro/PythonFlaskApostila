@@ -14,10 +14,18 @@ cors = CORS(app, resources={"*": {"origins": "*"}})
 @app.route('/', methods=['get'])
 def home():
     cur = mysql.connect.cursor()
+    listaP = list()
     cur.execute('SELECT * FROM ALUNO')
     data = cur.fetchall()
+    for pessoa in data:
+        p = {
+            "id": pessoa[0],
+            "nome": pessoa[1],
+            "idade": pessoa[2]
+        }
+        listaP.append(p)
     cur.close()
-    response = Response(json.dumps(data), mimetype="application/json")
+    response = Response(json.dumps(listaP), mimetype="application/json")
     return response
 
 app.run(debug=True)
