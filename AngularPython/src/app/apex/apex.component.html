@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Idade</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let aluno of lista">
+        <tr>
+            <td>{{aluno.nome}}</td> 
+            <td>{{aluno.idade}}</td> 
+        </tr>
+    </tbody>
+</table>

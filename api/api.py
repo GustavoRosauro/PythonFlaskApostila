@@ -28,4 +28,35 @@ def home():
     response = Response(json.dumps(listaP), mimetype="application/json")
     return response
 
+
+@app.route('/', methods=['post'])
+def inserir():
+    db = mysql.connect
+    cur = db.cursor()
+    dados = (request.json['nome'], request.json['idade'])
+    sqlInsert = "INSERT INTO ALUNO (NOME,IDADE) values (%s, %s)"
+    cur.execute(sqlInsert, dados)
+    db.commit()
+    return jsonify("inserido com sucesso")
+
+@app.route('/<int:id>',methods=['delete'])
+def deletar(id):
+    db = mysql.connect
+    cur = db.cursor()
+    sqlDelete = "DELETE FROM ALUNO WHERE ID ="+str(id)
+    cur.execute(sqlDelete)
+    db.commit()
+    return jsonify("removido com sucesso !")
+
+@app.route('/<int:id>', methods=['put'])
+def editar(id):
+    db = mysql.connect
+    cur = db.cursor()
+    dados = (request.json['nome'], request.json['idade'])
+    sqlUpdate = "update aluno set nome = %s, idade = %s where id ="+str(id)
+    cur.execute(sqlUpdate, dados)
+    db.commit()
+    return jsonify("Alterado com sucesso!!")
+
+
 app.run(debug=True)
